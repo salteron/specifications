@@ -1,5 +1,5 @@
 class Specification
-  def is_satisfied_by?(container)
+  def is_satisfied_by?(_)
     false
   end
 
