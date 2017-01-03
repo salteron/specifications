@@ -8,6 +8,10 @@ class ValueBoundSpecification < Specification
   def initialize(value)
     @value = value
   end
+
+  def generalization_of?(other)
+    other.special_case_of?(self)
+  end
 end
 
 class EqualSpecification < ValueBoundSpecification
@@ -71,6 +75,14 @@ describe EqualSpecification do
     it { expect(spec).to be_special_case_of(GreaterOrEqualSpecification.new(42)) }
     it { expect(spec).not_to be_special_case_of(GreaterOrEqualSpecification.new(43)) }
   end
+
+  describe '#generalization_of?' do
+    it { expect(spec).to be_generalization_of(EqualSpecification.new(42)) }
+    it { expect(spec).not_to be_generalization_of(EqualSpecification.new(41)) }
+
+    it { expect(spec).not_to be_generalization_of(LessOrEqualSpecification.new(42)) }
+    it { expect(spec).not_to be_generalization_of(GreaterOrEqualSpecification.new(42)) }
+  end
 end
 
 describe LessOrEqualSpecification do
@@ -87,6 +99,17 @@ describe LessOrEqualSpecification do
     it { expect(spec).not_to be_special_case_of(EqualSpecification.new(42)) }
     it { expect(spec).not_to be_special_case_of(GreaterOrEqualSpecification.new(42)) }
   end
+
+  describe '#generalization_of?' do
+    it { expect(spec).to be_generalization_of(LessOrEqualSpecification.new(41)) }
+    it { expect(spec).not_to be_generalization_of(LessOrEqualSpecification.new(43)) }
+
+    it { expect(spec).to be_generalization_of(EqualSpecification.new(42)) }
+    it { expect(spec).to be_generalization_of(EqualSpecification.new(41)) }
+    it { expect(spec).not_to be_generalization_of(EqualSpecification.new(43)) }
+
+    it { expect(spec).not_to be_generalization_of(GreaterOrEqualSpecification.new(42)) }
+  end
 end
 
 describe GreaterOrEqualSpecification do
@@ -102,5 +125,17 @@ describe GreaterOrEqualSpecification do
 
     it { expect(spec).not_to be_special_case_of(EqualSpecification.new(42)) }
     it { expect(spec).not_to be_special_case_of(LessOrEqualSpecification.new(42)) }
+  end
+
+  describe '#generalization_of?' do
+    it { expect(spec).to be_generalization_of(GreaterOrEqualSpecification.new(43)) }
+    it { expect(spec).to be_generalization_of(GreaterOrEqualSpecification.new(42)) }
+    it { expect(spec).not_to be_generalization_of(GreaterOrEqualSpecification.new(41)) }
+
+    it { expect(spec).to be_generalization_of(EqualSpecification.new(42)) }
+    it { expect(spec).to be_generalization_of(EqualSpecification.new(43)) }
+    it { expect(spec).not_to be_generalization_of(EqualSpecification.new(41)) }
+
+    it { expect(spec).not_to be_generalization_of(LessOrEqualSpecification.new(42)) }
   end
 end
