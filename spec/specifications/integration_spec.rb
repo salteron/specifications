@@ -20,7 +20,7 @@ describe '#and' do
     )
   end
 
-  it { expect(spec.is_satisfied_by?(container)).to be true }
+  it { expect(spec.satisfied_by?(container)).to be true }
 
   context 'when cant maintain temperature' do
     let(:container) do
@@ -29,7 +29,7 @@ describe '#and' do
         is_sanitary_for_food: true
       )
     end
-    it { expect(spec.is_satisfied_by?(container)).to be false }
+    it { expect(spec.satisfied_by?(container)).to be false }
   end
 
   context 'when not sanitary for food' do
@@ -39,7 +39,7 @@ describe '#and' do
         is_sanitary_for_food: false
       )
     end
-    it { expect(spec.is_satisfied_by?(container)).to be false }
+    it { expect(spec.satisfied_by?(container)).to be false }
   end
 end
 
@@ -53,5 +53,5 @@ describe '#not' do
     )
   end
 
-  it { expect(spec.is_satisfied_by?(container)).to be false }
+  it { expect(spec.satisfied_by?(container)).to be false }
 end

@@ -3,7 +3,7 @@ class NegationSpecification < Specification
     @component = component
   end
 
-  def is_satisfied_by?(container)
-    !@component.is_satisfied_by?(container)
+  def satisfied_by?(container)
+    !@component.satisfied_by?(container)
   end
 end

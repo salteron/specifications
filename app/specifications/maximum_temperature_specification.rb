@@ -3,7 +3,7 @@ class MaximumTemperatureSpecification < Specification
     @max_temperature = max_temperature
   end
 
-  def is_satisfied_by?(container)
+  def satisfied_by?(container)
     container.can_maintain_temperature_below?(@max_temperature)
   end
 end
